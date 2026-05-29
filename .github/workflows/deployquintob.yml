@@ -26,7 +26,7 @@ jobs:
    
     - name: Construir imagen de Docker
       run: |
-        docker build -t ghcr.oi/Alexander738022/holaflask:1.0.0 .
+        docker build -t ghcr.oi/alexander738022/holaflask:1.0.0 .
 
     - name: Login hacia GitHub Container Registry
       run : |
@@ -34,4 +34,4 @@ jobs:
 
     - name: Publicar la imagen creada
       run: |
-        docker push ghcr.io/Alexander738022/holaflask:1.0.0
+        docker push ghcr.io/alexander738022/holaflask:1.0.0
