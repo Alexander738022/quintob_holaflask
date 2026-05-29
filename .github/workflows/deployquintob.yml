@@ -1,9 +1,10 @@
-
 name: Flask app Hola
 
 on:
   push:
-    branches: [ "main" , "Alexander"]
+    branches:
+      - main
+      - Alexander
 
 permissions:
   contents: read
@@ -11,24 +12,26 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.12"
-    - name: Install dependencies
-      run:  pip install -r requirements.txt
-   
-    - name: Construir imagen de Docker
-      run:  docker build -t ghcr.oi/alexander738022/holaflask:1.0.0 .
+      - uses: actions/checkout@v4
 
-    - name: Login hacia GitHub Container Registry
-      run : echo "${{ secrets.TOKEN_WR }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-    
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
 
-    - name: Publicar la imagen creada
-      run: docker push ghcr.io/alexander738022/holaflask:1.0.0
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - - name: Construir imagen de Docker
+       run: docker build -t ghcr.io/alexander738022/holaflask:1.0.0 .
+
+      - name: Login hacia GitHub Container Registry
+        run: |
+          echo "${{ secrets.TOKEN_WR }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Publicar imagen creada
+        run: |
+          docker push ghcr.io/alexander738022/holaflask:1.0.0
